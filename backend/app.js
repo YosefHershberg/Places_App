@@ -24,6 +24,10 @@ app.use('/api/places', placesRoutes)
 
 app.use('/api/users', usersRoutes)
 
+app.get('/*', (req, res) => {
+    res.sendFile(path.join( __dirname, "build", 'index.html'))
+})
+
 app.use((req, res, next) => {
     const error = new HttpError('This route could not be found', 404)
     throw error;
@@ -41,10 +45,6 @@ app.use((error, req, res, next) => {
     }
     res.status(error.code || 500)
     res.json({ message: error.message || 'An unknown error accured' })
-})
-
-app.get('/*', (req, res) => {
-    res.sendFile(path.join( __dirname, "build", 'index.html'))
 })
 
 mongoose.connect(
