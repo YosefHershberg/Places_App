@@ -43,6 +43,10 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || 'An unknown error accured' })
 })
 
+app.get('/*', (req, res) => {
+    res.sendFile(path.join( __dirname, "build", 'index.html'))
+})
+
 mongoose.connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.vdxgsrs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 ).then(() => {
